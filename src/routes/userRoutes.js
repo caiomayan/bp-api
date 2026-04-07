@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as userController from "../controllers/userController.js";
+import { authenticateToken } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
@@ -7,12 +8,12 @@ router.get("", userController.listUsers);
 
 router.get("/:username", userController.listUserUsername);
 
-router.get("/id/:id", userController.listUserID);
+router.get("/id/:id", authenticateToken, userController.listUserID);
 
-router.post("", userController.createUser);
+router.post("", authenticateToken, userController.createUser);
 
-router.patch("/id/:id", userController.updateUser);
+router.patch("/id/:id", authenticateToken, userController.updateUser);
 
-router.delete("/id/:id", userController.deleteUser);
+router.delete("/id/:id", authenticateToken, userController.deleteUser);
 
 export default router;
